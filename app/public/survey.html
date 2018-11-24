@@ -160,7 +160,7 @@
     <hr>
     <footer class="footer">
       <div class="container">
-        <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/afhaque/friendfinder">GitHub Repo</a></p>
+        <p><a href="/api/friends">API Friends List</a>
       </div>
     </footer>
 
@@ -235,7 +235,7 @@
       // If all required fields are filled
       if (validateForm()) {
         // Create an object for the user"s data
-        var userData = {
+        var newfriend = {
           name: $("#name").val(),
           photo: $("#photo").val(),
           scores: [
@@ -253,11 +253,15 @@
         };
 
         // AJAX post the data to the friends API.
-        $.post("/api/friends", userData, function(data) {
+        $.post("/api/friends", newfriend)
+      .done(function(data) {
+        console.log(`Matching friend from database: ${data.name} and ${data.photo}`);
 
           // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-          $("#match-name").text(data.name);
-          $("#match-img").attr("src", data.photo);
+          $("#match-name").text(data.friendName);
+          console.log(`Log data.name ${data.friendName}`);
+          $("#match-img").attr("src", data.friendPicture);
+          console.log(`Log data.photo ${data.friendPicture}`);
 
           // Show the modal with the best match
           $("#results-modal").modal("toggle");
